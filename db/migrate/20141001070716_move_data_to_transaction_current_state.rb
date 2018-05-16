@@ -1,4 +1,4 @@
-class MoveDataToTransactionCurrentState < ActiveRecord::Migration
+class MoveDataToTransactionCurrentState < ActiveRecord::Migration[5.1]
   def up
     execute(<<-EOQ)
       # Get 'last_transition_to_state'

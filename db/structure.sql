@@ -525,6 +525,21 @@ CREATE TABLE `export_task_results` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `favors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `favors` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `owner_id` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `description` text,
+  `payment` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `status` varchar(255) DEFAULT 'enabled',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `feature_flags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -553,6 +568,19 @@ CREATE TABLE `feedbacks` (
   `is_handled` int(11) DEFAULT '0',
   `email` varchar(255) DEFAULT NULL,
   `community_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `filters`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `filters` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `person_id` varchar(255) DEFAULT NULL,
+  `keywords` text,
+  `category` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -605,6 +633,43 @@ CREATE TABLE `invitations` (
   KEY `index_invitations_on_inviter_id` (`inviter_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `items` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `owner_id` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `payment` int(11) DEFAULT NULL,
+  `status` varchar(255) DEFAULT 'enabled',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `kassi_events`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kassi_events` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `receiver_id` varchar(255) DEFAULT NULL,
+  `realizer_id` varchar(255) DEFAULT NULL,
+  `eventable_type` varchar(255) DEFAULT NULL,
+  `eventable_id` bigint(20) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_kassi_events_on_eventable_type_and_eventable_id` (`eventable_type`,`eventable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `kassi_events_people`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kassi_events_people` (
+  `person_id` varchar(255) DEFAULT NULL,
+  `kassi_event_id` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `landing_page_versions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -631,6 +696,20 @@ CREATE TABLE `landing_pages` (
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_landing_pages_on_community_id` (`community_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `listing_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `listing_comments` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `author_id` varchar(255) DEFAULT NULL,
+  `listing_id` int(11) DEFAULT NULL,
+  `content` text,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `is_read` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `listing_followers`;
@@ -1187,6 +1266,62 @@ CREATE TABLE `people` (
   KEY `index_people_on_facebook_id` (`facebook_id`) USING BTREE,
   KEY `index_people_on_id` (`id`) USING BTREE,
   KEY `index_people_on_username` (`username`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `person_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `person_comments` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `author_id` varchar(255) DEFAULT NULL,
+  `target_person_id` varchar(255) DEFAULT NULL,
+  `text_content` text,
+  `grade` int(11) DEFAULT NULL,
+  `task_type` varchar(255) DEFAULT NULL,
+  `task_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `kassi_event_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `person_conversations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `person_conversations` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `person_id` varchar(255) DEFAULT NULL,
+  `conversation_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `is_read` int(11) DEFAULT '0',
+  `last_sent_at` datetime DEFAULT NULL,
+  `last_received_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `person_interesting_listings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `person_interesting_listings` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `person_id` varchar(255) DEFAULT NULL,
+  `listing_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `person_read_listings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `person_read_listings` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `person_id` varchar(255) DEFAULT NULL,
+  `listing_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `prospect_emails`;

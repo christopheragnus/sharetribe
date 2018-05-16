@@ -1,4 +1,4 @@
-class AddSloganAndDescriptionToCommunities < ActiveRecord::Migration
+class AddSloganAndDescriptionToCommunities < ActiveRecord::Migration[5.1]
   def self.up
     add_column :communities, :slogan, :string
     add_column :communities, :description, :text

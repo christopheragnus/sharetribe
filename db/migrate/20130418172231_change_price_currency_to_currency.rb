@@ -1,4 +1,4 @@
-class ChangePriceCurrencyToCurrency < ActiveRecord::Migration
+class ChangePriceCurrencyToCurrency < ActiveRecord::Migration[5.1]
   def up
     rename_column :listings, :price_currency, :currency
   end

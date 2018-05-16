@@ -1,4 +1,4 @@
-class AddAllowedEmailsToCommunities < ActiveRecord::Migration
+class AddAllowedEmailsToCommunities < ActiveRecord::Migration[5.1]
   def self.up
     add_column :communities, :email_confirmation, :boolean, :default => false
     add_column :communities, :allowed_emails, :text

@@ -1,4 +1,4 @@
-class AddEventFeedEnabledToCommunities < ActiveRecord::Migration
+class AddEventFeedEnabledToCommunities < ActiveRecord::Migration[5.1]
   def self.up
     add_column :communities, :event_feed_enabled, :boolean, :default => true
   end

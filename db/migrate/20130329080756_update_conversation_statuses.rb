@@ -1,4 +1,4 @@
-class UpdateConversationStatuses < ActiveRecord::Migration
+class UpdateConversationStatuses < ActiveRecord::Migration[5.1]
   def up
     Conversation.find_each do |conversation|
       if conversation.status == "accepted"

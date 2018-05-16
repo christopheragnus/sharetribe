@@ -1,4 +1,4 @@
-class SetPriceQuantityPlaceholderNullToCommunitiesThatUseUnits < ActiveRecord::Migration
+class SetPriceQuantityPlaceholderNullToCommunitiesThatUseUnits < ActiveRecord::Migration[5.1]
   def up
     execute("
       UPDATE listing_shapes

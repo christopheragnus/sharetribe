@@ -1,4 +1,4 @@
-class PopulateMarketplaceSenderEmails < ActiveRecord::Migration
+class PopulateMarketplaceSenderEmails < ActiveRecord::Migration[5.1]
 
   class Community < ApplicationRecord
   end

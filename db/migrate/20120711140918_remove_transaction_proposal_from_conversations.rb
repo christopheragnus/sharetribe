@@ -1,4 +1,4 @@
-class RemoveTransactionProposalFromConversations < ActiveRecord::Migration
+class RemoveTransactionProposalFromConversations < ActiveRecord::Migration[5.1]
   def self.up
     remove_column :conversations, :transaction_proposal
   end
